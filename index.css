@@ -1,0 +1,316 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+.card {
+    background: white;
+    max-width: 400px;
+    margin: auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.banner img {
+    width: 100%;
+    height: auto;
+}
+
+.avatar img {
+    width: 120px;
+    height: 120px;
+    margin-top: -60px;
+    border-radius: 50%;
+    border: 5px solid rgb(235, 240, 155);
+    object-fit: cover;
+}
+
+h2 {
+    margin: 10px 0 0;
+}
+
+.fa-square-check {
+    color: green;
+}
+
+p {
+    margin: 5px 0;
+    color: #333;
+}
+
+.buttons button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    background: gold;
+    color: black;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.contact-info {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.contact-info a {
+    color: #171616;
+    text-decoration: none;
+}
+
+.contact-info_list {
+    display: flex;
+    background-color: #ffffff;
+    margin: 10px;
+    border-radius: 20px;
+    border: 0.5px solid #f0f0f0;
+}
+
+.contact-info_img img {
+    width: 20px;
+    height: 20px;
+}
+
+.contact-info_img {
+    margin-left: 20px;
+    border-right: 1px solid #e0e0e0;
+    padding-right: 20px;
+}
+
+
+.contact-info_item {
+    margin-left: 10px;
+}
+
+
+
+.call_item {
+    display: flex;
+    justify-content: space-around;
+    margin-left: 1px;
+    /* gap: 20px; */
+}
+
+.ngang {
+    padding-top: 4px;
+    color: #972b2b;
+}
+
+.phone1,
+.phone2 {
+    padding: 5px 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.phone1:hover,
+.phone2:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+    cursor: pointer;
+}
+
+.social-icons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px;
+}
+
+.social-icons a {
+    margin: 5px;
+    border: 1px solid #e9e8e8;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    display: inline-block;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.social-icons img {
+    width: 40px;
+    height: 40px;
+    border-radius: 40%;
+}
+
+footer {
+    font-size: 13px;
+    margin-top: 20px;
+    padding-bottom: 10px;
+}
+
+/* Modal xác nhận gọi điện */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 18px;
+    padding: 32px 24px 24px 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    text-align: center;
+    min-width: 280px;
+    max-width: 90vw;
+}
+
+.modal-icon {
+    font-size: 38px;
+    color: #27ae60;
+    margin-bottom: 12px;
+}
+
+.modal-text {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: #222;
+}
+
+.modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal-call-btn {
+    background: linear-gradient(90deg, #f1c40f, #f39c12);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+    box-shadow: 0 2px 8px rgba(241, 196, 15, 0.12);
+}
+
+.modal-call-btn:hover {
+    background: linear-gradient(90deg, #f39c12, #f1c40f);
+}
+
+.modal-cancel-btn {
+    background: #eee;
+    color: #222;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 0;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.modal-cancel-btn:hover {
+    background: #ddd;
+}
+
+/* Modal MBBank custom styles */
+.modal-mbbank-content {
+    max-width: 340px;
+}
+
+.mbbank-title {
+    color: #233fbd;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+.mbbank-info {
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+.mbbank-qr-img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 12px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mbbank-btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.mbbank-copy-btn {
+    background: #fff;
+    color: #27ae60;
+    border: 1px solid #27ae60;
+    padding: 10px;
+}
+
+.mbbank-save-btn {
+    background: #fff;
+    color: #3498db;
+    border: 1px solid #3498db;
+    padding: 10px;
+}
+
+
+.mbbank-close-btn {
+    width: 80%;
+}
+
+/* Modal QR Code custom styles */
+.modal-qr-content {
+    max-width: 340px;
+}
+
+.qr-title {
+    color: #233fbd;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+
+.qr-img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 16px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.qr-btn-group {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.qr-save-btn {
+    background: #fff;
+    color: #3498db;
+    border: 1px solid #3498db;
+    padding: 10px 20px;
+}
+
+.qr-close-btn {
+    width: 80%;
+}
