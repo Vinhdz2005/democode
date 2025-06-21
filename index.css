@@ -25,7 +25,7 @@ body {
     height: 120px;
     margin-top: -60px;
     border-radius: 50%;
-    border: 5px solid rgb(235, 240, 155);
+    border: 2px solid rgb(208, 228, 196);
     object-fit: cover;
 }
 
@@ -81,12 +81,18 @@ p {
     padding-right: 20px;
 }
 
-
 .contact-info_item {
     margin-left: 10px;
+    display: flex;
+    align-items: center;
+    width: 80%;
+    border-radius: 5px;
+    color: #233fbd;
 }
 
-
+.contact-info_item a {
+    color: #233fbd;
+}
 
 .call_item {
     display: flex;
@@ -96,23 +102,35 @@ p {
 }
 
 .ngang {
-    padding-top: 4px;
-    color: #972b2b;
+
+    color: #233fbd;
 }
 
 .phone1,
 .phone2 {
-    padding: 5px 10px;
-    background-color: #ffffff;
+    padding: 5px 30px;
+    background-color: #fdfdfd;
     border-radius: 5px;
     transition: all 0.3s ease;
 }
 
 .phone1:hover,
 .phone2:hover {
-    background-color: #f0f0f0;
-    transform: translateY(-2px);
+    background-color: #e9e8e8;
+    transform: scale(1.05);
+
     cursor: pointer;
+}
+
+.item_gmail,
+.item_ggmap {
+    transition: all 0.3s ease;
+}
+
+.item_gmail:hover,
+.item_ggmap:hover {
+    background-color: #e9e8e8;
+    transform: scale(1.05);
 }
 
 .social-icons {
@@ -125,7 +143,7 @@ p {
 .social-icons a {
     margin: 5px;
     border: 1px solid #e9e8e8;
-    border-radius: 50%;
+    border-radius: 30%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
     display: inline-block;
     padding: 10px;
@@ -140,7 +158,7 @@ p {
 .social-icons img {
     width: 40px;
     height: 40px;
-    border-radius: 40%;
+    border-radius: 30%;
 }
 
 footer {
@@ -271,7 +289,6 @@ footer {
     border: 1px solid #3498db;
     padding: 10px;
 }
-
 
 .mbbank-close-btn {
     width: 80%;
