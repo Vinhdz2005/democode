@@ -1,0 +1,106 @@
+{
+  "profile": {
+    "name": "Đào Văn Vinh",
+    "nickname": "Công Vinh",
+    "title": "Sinh viên",
+    "school": "Trường đại học Công Nghệ Giao Thông Vận Tải",
+    "avatar": "/img/avatar.jpg",
+    "banner": "/img/banner.jpg"
+  },
+  "contact": {
+    "phones": [
+      {
+        "number": "0389783619",
+        "label": "Số điện thoại 1"
+      },
+      {
+        "number": "0876787950",
+        "label": "Số điện thoại 2"
+      }
+    ],
+    "email": "daovinhgm2005@gmail.com",
+    "address": {
+      "text": "7/163, Chiến Thắng,Văn Quán,Hà Đông,HP",
+      "link": "https://maps.app.goo.gl/RcpHMYBpK2kUWnHw9"
+    }
+  },
+  "certificates": [
+    {
+      "id": "sql",
+      "displayName": "Chứng chỉ SQL",
+      "title": "Chứng chỉ SQL",
+      "image": "/img/sql.jpg"
+    },
+    {
+      "id": "health",
+      "displayName": "Chứng nhận sức khỏe",
+      "title": "Chứng nhận sức khỏe",
+      "image": "/img/suckhoe.jpg"
+    },
+    {
+      "id": "scholarship",
+      "displayName": "Chứng nhận học bổng",
+      "title": "Chứng nhận học bổng",
+      "image": "/img/hocbong.jpg"
+    },
+    {
+      "id": "ai",
+      "displayName": "Giải nhất AI social For Challenge 2025 UTT",
+      "title": "Giải nhất AI social For Challenge 2025 UTT",
+      "image": "/img/giainhatAI.jpg"
+    }
+  ],
+  "social": [
+    {
+      "name": "Facebook",
+      "url": "https://www.facebook.com/sadoa.trum/",
+      "icon": "/img/facebook.png"
+    },
+    {
+      "name": "TikTok",
+      "url": "https://www.tiktok.com/@vinhzuize05",
+      "icon": "/img/tiktok.png"
+    },
+    {
+      "name": "Zalo",
+      "url": "https://zalo.me/0389783619",
+      "icon": "/img/zalo.webp"
+    },
+    {
+      "name": "YouTube",
+      "url": "https://www.youtube.com/@Chaoxiaoz",
+      "icon": "/img/youtube.jpg"
+    },
+    {
+      "name": "Messenger",
+      "url": "https://www.facebook.com/messages/t/100029725782382",
+      "icon": "/img/messenger.png"
+    },
+    {
+      "name": "Instagram",
+      "url": "https://www.instagram.com/vinhdz.05/",
+      "icon": "/img/instagram.png"
+    },
+    {
+      "name": "Locket",
+      "url": "https://locket.camera/links/ixQxA2mWqeMH4oCA8",
+      "icon": "/img/locket.png"
+    },
+    {
+      "name": "Mbbank",
+      "url": "#",
+      "icon": "/img/mbbank.png",
+      "isBank": true,
+      "bankInfo": {
+        "name": "(MB)Ngân hàng Quân Đội",
+        "accountNumber": "0389783619",
+        "accountName": "Đào Văn Vinh",
+        "qrCode": "/img/QRmbbank.jpg"
+      }
+    }
+  ],
+  "qrCode": {
+    "image": "/img/QRcode.png",
+    "title": "Quét mã Qr"
+  }
+}

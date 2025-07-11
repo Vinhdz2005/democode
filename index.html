@@ -14,10 +14,10 @@
 
     <div class="card">
         <div class="banner">
-            <img src="/img/banner.jpg" alt="Banner">
+            <img src="/img/banner.jpg" alt="Banner" onclick="showImageModal('banner')">
         </div>
         <div class="avatar">
-            <img src="/img/avatar.jpg" alt="Avatar">
+            <img src="/img/avatar.jpg" alt="Avatar" onclick="showImageModal('avatar')">
         </div>
         <h2>Đào Văn Vinh <i class="fa-regular fa-square-check"></i></h2>
         <p>Công Vinh<br>Sinh viên<br>Trường đại học Công Nghê Giao Thông Vận Tải</p>
@@ -125,6 +125,24 @@
 
             </div>
 
+            <div class="cetificate">
+                <h3>Thành tích</h3>
+                <div class="cetiifica_list">
+                    <div class="cetificate_item" onclick="showCertificateModal('sql')">
+                        Chứng chỉ SQL
+                    </div>
+                    <div class="cetificate_item" onclick="showCertificateModal('health')">
+                        Chứng nhận sức khỏe
+                    </div>
+                    <div class="cetificate_item" onclick="showCertificateModal('scholarship')">
+                        Chứng nhận học bổng
+                    </div>
+                    <div class="cetificate_item" onclick="showCertificateModal('ai')">
+                        Giải nhất AI social For Challenge 2025 UTT
+                    </div>
+                </div>
+            </div>
+
             <footer>
                 <p>© 2025 DVC</p>
                 <!-- <a href="#">Đăng ký</a> | <a href="#">Đăng nhập</a> -->
@@ -199,8 +217,39 @@
             </div>
         </div>
 
+        <!-- Modal Chứng chỉ -->
+        <div id="certificateModal" class="modal">
+            <div class="modal-content modal-certificate-content">
+                <div class="certificate-title" id="certificateTitle">Chứng chỉ</div>
+                <div class="certificate-img-container">
+                    <img src="" alt="Chứng chỉ" class="certificate-img" id="certificateImg">
+                </div>
+                <div class="certificate-btn-group">
+                    <button class="modal-call-btn certificate-save-btn" onclick="saveCertificate()"><i
+                            class="fa fa-download"></i>
+                        Lưu ảnh</button>
+                </div>
+                <button class="modal-cancel-btn certificate-close-btn" onclick="closeCertificateModal()">Đóng</button>
+            </div>
+        </div>
+
+        <!-- Modal Avatar/Banner -->
+        <div id="imageModal" class="modal">
+            <div class="modal-content modal-image-content">
+                <div class="image-title" id="imageTitle">Ảnh</div>
+                <div class="image-container">
+                    <img src="" alt="Ảnh" class="modal-image" id="modalImage">
+                </div>
+                <div class="image-btn-group">
+                    <button class="modal-call-btn image-save-btn" onclick="saveImage()"><i class="fa fa-download"></i>
+                        Lưu ảnh</button>
+                </div>
+                <button class="modal-cancel-btn image-close-btn" onclick="closeImageModal()">Đóng</button>
+            </div>
+        </div>
+
 </body>
 
-<script src="index.js"></script>
+<script src="frontend.js"></script>
 
 </html>

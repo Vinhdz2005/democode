@@ -18,6 +18,12 @@ body {
 .banner img {
     width: 100%;
     height: auto;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.banner img:hover {
+    opacity: 0.9;
 }
 
 .avatar img {
@@ -27,6 +33,12 @@ body {
     border-radius: 50%;
     border: 2px solid rgb(208, 228, 196);
     object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.avatar img:hover {
+    transform: scale(1.05);
 }
 
 h2 {
@@ -329,5 +341,102 @@ footer {
 }
 
 .qr-close-btn {
+    width: 80%;
+}
+
+/* Modal Chứng chỉ custom styles */
+.modal-certificate-content {
+    max-width: 400px;
+}
+
+.certificate-title {
+    color: #233fbd;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+
+.certificate-img-container {
+    margin-bottom: 16px;
+}
+
+.certificate-img {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.certificate-btn-group {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.certificate-save-btn {
+    background: #fff;
+    color: #3498db;
+    border: 1px solid #3498db;
+    padding: 10px 20px;
+}
+
+.certificate-close-btn {
+    width: 80%;
+}
+
+/* Certificate items styling */
+.cetificate_item {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.cetificate_item:hover {
+    background-color: #d4dbe0;
+    transform: scale(1.02);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal Avatar/Banner custom styles */
+.modal-image-content {
+    max-width: 500px;
+}
+
+.image-title {
+    color: #233fbd;
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+
+.image-container {
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.modal-image {
+    max-width: 100%;
+    max-height: 400px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-btn-group {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.image-save-btn {
+    background: #fff;
+    color: #3498db;
+    border: 1px solid #3498db;
+    padding: 10px 20px;
+}
+
+.image-close-btn {
     width: 80%;
 }

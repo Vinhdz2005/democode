@@ -1,76 +1,95 @@
-// đóng mở phone 1
-function showCallModal() {
-    document.getElementById('callModal').style.display = 'flex';
-}
-function closeCallModal() {
-    document.getElementById('callModal').style.display = 'none';
-}
-// đóng mở phone 2
-function showCallModal2() {
-    document.getElementById('callModal2').style.display = 'flex';
-}
-function closeCallModal2() {
-    document.getElementById('callModal2').style.display = 'none';
-}
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const fs = require('fs').promises;
+const path = require('path');
 
-// lưu danh bạ
-function showSaveContactModal() {
-    document.getElementById('saveContactModal').style.display = 'flex';
-}
-function closeSaveContactModal() {
-    document.getElementById('saveContactModal').style.display = 'none';
-}
-function downloadVCard() {
-    const vCardData = `BEGIN:VCARD\nVERSION:3.0\nFN:Đào Văn Vinh\nTEL;TYPE=CELL:0389783619\nEND:VCARD`;
-    const blob = new Blob([vCardData], { type: 'text/vcard' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'DaoVanVinh.vcf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    closeSaveContactModal();
-}
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-// modal mbbank
-function showMbbankModal() {
-    document.getElementById('mbbankModal').style.display = 'flex';
-}
-function closeMbbankModal() {
-    document.getElementById('mbbankModal').style.display = 'none';
-}
-function copyMbbankInfo() {
-    const info = '(MB)Ngân hàng Quân Đội\n0389783619 | Đào Văn Vinh';
-    navigator.clipboard.writeText(info);
-    alert('Đã sao chép thông tin tài khoản!');
-}
-function saveMbbankQR() {
-    const img = document.getElementById('mbbankQRImg');
-    const url = img.src;
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'mbbank_qr.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
+// Middleware
+app.use(cors());
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// Modal QR Code
-function scanQR() {
-    document.getElementById('qrModal').style.display = 'flex';
-}
+// Serve static files (frontend)
+app.use(express.static(__dirname));
 
-function closeQRModal() {
-    document.getElementById('qrModal').style.display = 'none';
-}
+// API endpoint để lưu dữ liệu
+app.post('/api/save-data', async (req, res) => {
+    try {
+        const data = req.body;
 
-function saveQRCode() {
-    const img = document.getElementById('qrImg');
-    const url = img.src;
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'qr_code.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
+        if (!data || typeof data !== 'object') {
+            return res.status(400).json({
+                success: false,
+                error: 'Dữ liệu không hợp lệ'
+            });
+        }
+
+        const filePath = path.join(__dirname, 'data.json');
+        const jsonString = JSON.stringify(data, null, 2);
+        await fs.writeFile(filePath, jsonString, 'utf8');
+
+        console.log('✅ Dữ liệu đã được lưu thành công:', new Date().toLocaleString());
+
+        res.json({
+            success: true,
+            message: 'Dữ liệu đã được lưu thành công!',
+            timestamp: new Date().toISOString()
+        });
+
+    } catch (error) {
+        console.error('❌ Lỗi khi lưu dữ liệu:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Không thể lưu dữ liệu: ' + error.message
+        });
+    }
+});
+
+// API endpoint để đọc dữ liệu
+app.get('/api/get-data', async (req, res) => {
+    try {
+        const filePath = path.join(__dirname, 'data.json');
+        const data = await fs.readFile(filePath, 'utf8');
+        const jsonData = JSON.parse(data);
+
+        res.json({
+            success: true,
+            data: jsonData
+        });
+
+    } catch (error) {
+        console.error('❌ Lỗi khi đọc dữ liệu:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Không thể đọc dữ liệu: ' + error.message
+        });
+    }
+});
+
+// Routes
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/admin', (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin.html'));
+});
+
+// Khởi động server
+app.listen(PORT, () => {
+    console.log(`🚀 Server running at http://localhost:${PORT}`);
+    console.log(`📱 Trang chính: http://localhost:${PORT}/index.html`);
+    console.log(`⚙️  Trang admin: http://localhost:${PORT}/admin`);
+});
+
+// Xử lý lỗi
+process.on('uncaughtException', (error) => {
+    console.error('❌ Lỗi không xử lý:', error);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('❌ Promise bị từ chối:', reason);
+});
