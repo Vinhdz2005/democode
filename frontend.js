@@ -4,8 +4,8 @@ let profileData = {};
 // Load data from JSON file
 async function loadProfileData() {
     try {
-        // Thử load từ Node.js API trước
-        const response = await fetch('/api/get-data');
+        // Thử load từ Node.js API trước (tránh cache)
+        const response = await fetch('/api/get-data?' + Date.now());
         if (response.ok) {
             const result = await response.json();
             if (result.success) {
@@ -16,8 +16,8 @@ async function loadProfileData() {
             }
         }
 
-        // Fallback: load trực tiếp từ file data.json
-        const fileResponse = await fetch('data.json');
+        // Fallback: load trực tiếp từ file data.json (tránh cache)
+        const fileResponse = await fetch('data.json?' + Date.now());
         profileData = await fileResponse.json();
         console.log('Dữ liệu đã tải thành công từ file:', profileData);
         updatePageContent();

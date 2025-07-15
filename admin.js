@@ -3,6 +3,10 @@ let profileData = {};
 
 // Initialize the admin page
 document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.content input, .content textarea, .content select').forEach(function (el) {
+        el.addEventListener('input', previewData);
+        el.addEventListener('change', previewData);
+    });
     loadData();
     loadSocialItems();
     loadCertificateItems();
@@ -24,6 +28,20 @@ function showTab(tabName) {
 
     // Add active class to selected tab
     event.target.classList.add('active');
+
+    // Gọi lại các hàm load dữ liệu khi chuyển tab
+    if (tabName === 'social') {
+        loadSocialItems();
+    }
+    if (tabName === 'certificates') {
+        loadCertificateItems();
+    }
+    if (tabName === 'contact') {
+        loadPhoneItems();
+    }
+    if (tabName === 'profile') {
+        populateForm();
+    }
 }
 
 // Load data from data.json
@@ -159,11 +177,7 @@ function populateForm() {
     document.getElementById('contactAddressLink').value = profileData.contact.address.link;
 
     // Populate phones
-    const phonesContainer = document.getElementById('phonesContainer');
-    phonesContainer.innerHTML = '';
-    profileData.contact.phones.forEach(phone => {
-        addPhoneItem(phone.number, phone.label);
-    });
+    loadPhoneItems();
 }
 
 // Phone management
@@ -191,8 +205,7 @@ function removePhone(button) {
 function loadSocialItems() {
     const container = document.getElementById('socialContainer');
     container.innerHTML = '';
-
-    profileData.social.forEach((social, index) => {
+    (profileData.social || []).forEach((social, index) => {
         addSocialItem(social, index);
     });
 }
@@ -209,7 +222,7 @@ function addSocial() {
             accountName: '',
             qrCode: ''
         }
-    }, profileData.social.length);
+    }, document.querySelectorAll('.social-item').length); // Số lượng hiện tại trên form
 }
 
 function addSocialItem(social, index) {
@@ -230,8 +243,10 @@ function addSocialItem(social, index) {
             <input type="url" class="social-url" value="${social.url}" placeholder="https://...">
         </div>
         <div class="form-group">
-            <label>Icon (đường dẫn ảnh):</label>
-            <input type="text" class="social-icon" value="${social.icon}" placeholder="/img/icon.png">
+            <label>Icon (đường dẫn ảnh hoặc base64):</label>
+            <input type="text" class="social-icon" value="${social.icon}" placeholder="/img/icon.png hoặc dán base64">
+            <input type="file" class="social-icon-file" accept="image/*" style="display:none">
+            <button type="button" class="btn btn-upload-social" style="margin-top:5px;" onclick="this.previousElementSibling.click()"><i class="fas fa-upload"></i> Chọn ảnh từ máy</button>
         </div>
         <div class="form-group">
             <label>
@@ -264,20 +279,47 @@ function addSocialItem(social, index) {
     const checkbox = socialItem.querySelector('.social-is-bank');
     const bankInfo = socialItem.querySelector('.bank-info');
     checkbox.addEventListener('change', function () {
-        bankInfo.style.display = this.checked ? 'block' : 'none';
+        if (this.checked) {
+            // Bỏ check ở tất cả các item khác
+            document.querySelectorAll('.social-is-bank').forEach(cb => {
+                if (cb !== this) {
+                    cb.checked = false;
+                    cb.closest('.social-item').querySelector('.bank-info').style.display = 'none';
+                }
+            });
+            bankInfo.style.display = 'block';
+        } else {
+            bankInfo.style.display = 'none';
+        }
+    });
+
+    // Xử lý khi chọn file icon
+    const fileInput = socialItem.querySelector('.social-icon-file');
+    const iconInput = socialItem.querySelector('.social-icon');
+    fileInput.addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (evt) {
+                iconInput.value = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
     });
 }
 
 function removeSocial(button) {
+    // Xóa đúng item mạng xã hội khỏi form
     button.closest('.social-item').remove();
+    previewData(); // Cập nhật xem trước JSON
+    saveData(); // Tự động lưu lại data.json
 }
 
 // Certificate management
 function loadCertificateItems() {
     const container = document.getElementById('certificatesContainer');
     container.innerHTML = '';
-
-    profileData.certificates.forEach((cert, index) => {
+    (profileData.certificates || []).forEach((cert, index) => {
         addCertificateItem(cert, index);
     });
 }
@@ -288,7 +330,7 @@ function addCertificate() {
         title: '',
         displayName: '',
         image: ''
-    }, profileData.certificates.length);
+    }, document.querySelectorAll('.certificate-item').length);
 }
 
 function addCertificateItem(cert, index) {
@@ -313,15 +355,43 @@ function addCertificateItem(cert, index) {
             <input type="text" class="cert-display-name" value="${cert.displayName}" placeholder="Chứng chỉ SQL">
         </div>
         <div class="form-group">
-            <label>Ảnh (đường dẫn):</label>
-            <input type="text" class="cert-image" value="${cert.image}" placeholder="/img/sql.jpg">
+            <label>Ảnh (đường dẫn hoặc chọn file):</label>
+            <input type="text" class="cert-image" value="${cert.image}" placeholder="/img/sql.jpg hoặc dán base64">
+            <input type="file" class="cert-image-file" accept="image/*" style="display:none">
+            <button type="button" class="btn btn-upload-cert" style="margin-top:5px;" onclick="this.previousElementSibling.click()"><i class="fas fa-upload"></i> Chọn ảnh từ máy</button>
         </div>
     `;
     container.appendChild(certItem);
+
+    // Xử lý khi chọn file ảnh chứng chỉ
+    const fileInput = certItem.querySelector('.cert-image-file');
+    const imageInput = certItem.querySelector('.cert-image');
+    fileInput.addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (evt) {
+                imageInput.value = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 }
 
 function removeCertificate(button) {
+    // Xóa đúng item chứng chỉ khỏi form
     button.closest('.certificate-item').remove();
+    previewData(); // Cập nhật xem trước JSON
+    saveData(); // Tự động lưu lại data.json
+}
+
+// Thêm hàm loadPhoneItems nếu chưa có, hoặc sửa trong populateForm
+function loadPhoneItems() {
+    const phonesContainer = document.getElementById('phonesContainer');
+    phonesContainer.innerHTML = '';
+    (profileData.contact.phones || []).forEach(phone => {
+        addPhoneItem(phone.number, phone.label);
+    });
 }
 
 // Collect data from form
@@ -343,8 +413,6 @@ function collectData() {
                 link: document.getElementById('contactAddressLink').value
             }
         },
-        social: [],
-        certificates: [],
         qrCode: profileData.qrCode || {
             image: "/img/qr-code.jpg",
             title: "Quét mã QR"
@@ -365,6 +433,7 @@ function collectData() {
 
     // Collect social media
     const socialItems = document.querySelectorAll('.social-item');
+    const socialArr = [];
     socialItems.forEach(item => {
         const social = {
             name: item.querySelector('.social-name').value,
@@ -383,12 +452,15 @@ function collectData() {
         }
 
         if (social.name && social.url) {
-            data.social.push(social);
+            socialArr.push(social);
         }
     });
+    // Luôn lưu mảng social, kể cả khi rỗng
+    data.social = socialArr;
 
     // Collect certificates
     const certItems = document.querySelectorAll('.certificate-item');
+    const certArr = [];
     certItems.forEach(item => {
         const cert = {
             id: item.querySelector('.cert-id').value,
@@ -398,9 +470,12 @@ function collectData() {
         };
 
         if (cert.id && cert.title) {
-            data.certificates.push(cert);
+            certArr.push(cert);
         }
     });
+    if (certArr.length > 0) {
+        data.certificates = certArr;
+    }
 
     return data;
 }
@@ -411,15 +486,66 @@ function previewData() {
     const jsonPreview = document.getElementById('jsonPreview');
     jsonPreview.textContent = JSON.stringify(data, null, 2);
 }
+// lấy ảnh đại diện và ảnh bìa từ file ở trên máy 
+document.getElementById('avatarFileInput').addEventListener('change', function (e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (evt) {
+            document.getElementById('profileAvatar').value = evt.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+document.getElementById('bannerFileInput').addEventListener('change', function (e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (evt) {
+            document.getElementById('profileBanner').value = evt.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// Hàm so sánh sâu, chỉ lấy các trường khác biệt
+function getChangedFields(newData, oldData) {
+    let diff = {};
+    for (const key in newData) {
+        if (
+            typeof newData[key] === 'object' &&
+            newData[key] !== null &&
+            !Array.isArray(newData[key]) &&
+            oldData[key]
+        ) {
+            const childDiff = getChangedFields(newData[key], oldData[key]);
+            if (Object.keys(childDiff).length > 0) {
+                diff[key] = childDiff;
+            }
+        } else if (Array.isArray(newData[key])) {
+            if (JSON.stringify(newData[key]) !== JSON.stringify(oldData[key])) {
+                diff[key] = newData[key];
+            }
+        } else {
+            if (newData[key] !== oldData[key]) {
+                diff[key] = newData[key];
+            }
+        }
+    }
+    return diff;
+}
 
 // Save data
 async function saveData() {
-    const data = collectData();
-    const jsonString = JSON.stringify(data, null, 2);
+    const newData = collectData();
+
+    // Gửi toàn bộ dữ liệu mới lên backend, không dùng getChangedFields nữa
+    const jsonString = JSON.stringify(newData, null, 2);
 
     try {
         // Hiển thị loading
-        const saveBtn = event.target;
+        const saveBtn = document.querySelector('.btn-success');
         const originalText = saveBtn.innerHTML;
         saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang lưu...';
         saveBtn.disabled = true;

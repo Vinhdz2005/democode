@@ -237,10 +237,16 @@
                     <div class="form-group">
                         <label>Ảnh đại diện:</label>
                         <input type="text" id="profileAvatar" value="/img/avatar.jpg">
+                        <input type="file" id="avatarFileInput" accept="image/*" style="display:none">
+                        <button type="button" onclick="document.getElementById('avatarFileInput').click()">Chọn ảnh từ
+                            máy</button>
                     </div>
                     <div class="form-group">
                         <label>Ảnh bìa:</label>
                         <input type="text" id="profileBanner" value="/img/banner.jpg">
+                        <input type="file" id="bannerFileInput" accept="image/*" style="display:none">
+                        <button type="button" onclick="document.getElementById('bannerFileInput').click()">Chọn ảnh từ
+                            máy</button>
                     </div>
                 </div>
             </div>
@@ -345,6 +351,7 @@
     </div>
 
     <script src="admin.js"></script>
+
 </body>
 
 </html>

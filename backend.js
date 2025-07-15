@@ -28,7 +28,37 @@ app.post('/api/save-data', async (req, res) => {
         }
 
         const filePath = path.join(__dirname, 'data.json');
-        const jsonString = JSON.stringify(data, null, 2);
+        // Đọc dữ liệu cũ
+        let oldData = {};
+        try {
+            const oldJson = await fs.readFile(filePath, 'utf8');
+            oldData = JSON.parse(oldJson);
+        } catch (e) {
+            // Nếu file chưa tồn tại hoặc lỗi đọc thì giữ oldData là {}
+        }
+
+        // Hàm merge sâu (deep merge)
+        function deepMerge(target, source) {
+            for (const key in source) {
+                if (
+                    source[key] &&
+                    typeof source[key] === 'object' &&
+                    !Array.isArray(source[key])
+                ) {
+                    if (!target[key]) target[key] = {};
+                    deepMerge(target[key], source[key]);
+                } else {
+                    target[key] = source[key];
+                }
+            }
+            return target;
+        }
+
+        // Merge dữ liệu mới vào dữ liệu cũ
+        const newData = deepMerge(oldData, data);
+
+        // Ghi file với format đẹp
+        const jsonString = JSON.stringify(newData, null, 2);
         await fs.writeFile(filePath, jsonString, 'utf8');
 
         console.log('✅ Dữ liệu đã được lưu thành công:', new Date().toLocaleString());
